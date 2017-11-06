@@ -5,8 +5,13 @@ geth --dev console
 
 geth --datadir "./data-dev" --dev attach "\\.\pipe\geth.ipc"
 
-
 geth --rpc --rpcaddr localhost --rpcport "8545" --rpccorsdomain "*" --datadir "./data-dev" --dev console
+
+or 
+
+geth --datadir "./data-dev" --dev console
+admin.startRPC("localhost", 8545, "*", "eth,personal,admin,web3,net")
+
 
 ---------- test network command -------
 
