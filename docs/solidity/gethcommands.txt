@@ -1,4 +1,28 @@
+﻿
+------ dev network command -----------
 
+geth --dev console
+
+geth --datadir "./data-dev" --dev attach "\\.\pipe\geth.ipc"
+
+
+geth --rpc --rpcaddr localhost --rpcport "8545" --rpccorsdomain "*" --datadir "./data-dev" --dev console
+
+---------- test network command -------
+
+geth --identity "MyTestNode" --datadir "./data" --testnet --fast
+geth --identity "MyTestNode" --datadir "./data" --trace "./log" --testnet --fast
+
+
+-----------------------------------------
+
+Geth: setting up RPC for geth client
+
+
+
+
+
+------------------------------------------------------------------------------------
 C:\Users\Development\Desktop\Ethereum\geth>geth --datadir gethdatadir init genesis.json
 Fatal: invalid genesis file: missing required field 'alloc' for Genesis
 

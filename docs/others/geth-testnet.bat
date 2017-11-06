@@ -1,0 +1,1 @@
+geth --identity "MyTestNode" --datadir "./eth-pvt-data" --testnet --fast
