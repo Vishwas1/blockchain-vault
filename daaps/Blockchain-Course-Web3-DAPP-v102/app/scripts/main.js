@@ -370,7 +370,7 @@ function doGetCompilers()  {
 
 function    doCompileSolidityContract()  {
 
-
+debugger;
     var source = document.getElementById('sourcecode').value;
   
     console.log(flattenSource(source));
@@ -381,6 +381,7 @@ function    doCompileSolidityContract()  {
             console.log(error);
             setData('compilation_result',error,true);
         } else {
+            debugger;
             // This is an issue seen only on windows - solc compile binary - ignore
             result = compileResultWindowsHack(result);
             console.log('Compilation Result=',JSON.stringify(result));
@@ -506,6 +507,7 @@ function    doDeployContractSynchronous()   {
 
 // Utility method for creating the contract instance
 function  createContractInstance(addr){
+    debugger;
     var     abiDefinitionString = document.getElementById('compiled_abidefinition').value;
     var     abiDefinition = JSON.parse(abiDefinitionString);
 
@@ -535,6 +537,7 @@ function  createContractInstance(addr){
  */
 function    doContractFunctionCall()  {
     // This leads to the invocation of the method locally
+    debugger;
     var instance = createContractInstance();
 
     var    funcName = document.getElementById('contract_select_function').value;
