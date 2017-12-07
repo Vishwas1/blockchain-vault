@@ -1,49 +1,41 @@
 pragma solidity ^0.4.0;
-/**
-    //APIs needs to be implemented for ERC20 standards...
-    contract ERC20 {
-        function totalSupply() constant returns (uint totalSupply);
-        function balanceOf(address _owner) constant returns (uint balance);
-        function transfer(address _to, uint _value) returns (bool success);
-        function approve(address _spender, uint _value) returns (bool success);
-        function allowance(address _owner, address _spender) constant returns (uint remaining);
-        function transferFrom(address _from, address _to, uint _value) returns (bool success);
-        event Transfer(address indexed _from, address indexed _to, uint _value);
-        event Approval(address indexed _owner, address indexed _spender, uint _value);
-    }
-
-*/
-//-------------------------------------------------------------//
 
 contract TemplateCoin {
 
-    string public constant name = "Template Token";
-    string public constant symbol = "TCK";
+    string public  name = "Blockchain Family Token";
+    string public  symbol = "BCF";
 
     /**
         E.g. decimal = 0 : value = 100 -> 100 tokens
         E.g. decimal = 1 : value = 100 -> 10.0 tokens
         E.g. decimal = 2 : value = 100 -> 1.00 tokens
      */
-    uint8 public constant decimal = 0;
-    string public constant version = "0.1";
+    uint8 public  decimal = 0;
+    string public  version = "0.1";
 
     // Backed by ether state ->  user can pay actual ether to buy your token..and they can 
     // sell you token for ether through your contract.
-    uint256 public buyPrice; // what price of ether a token cost
-    uint266 public sellPrice; // what price of ether a token sell for
+    //uint256 public buyPrice; // what price of ether a token cost
+    //uint256 public sellPrice; // what price of ether a token sell for
 
     mapping (address=> uint256) public balances;
     mapping (address=> mapping (address=>uint256)) public allowances;
     uint256 public totalSupply;
-
+    uint public price; //price of one token in ether
+    
+    address owner; // the one who own's the contract -> creator of the contract
 
     event Transfer(address indexed _from, address indexed _to, uint _value); //Log if any one has transfered anything
     event Approval(address indexed _owner, address indexed _spender, uint _value); //Log for approval
+    event TokenPriceSet(address indexed _owner, uint _value); //Log after setting the token price
 
     function TemplateCoin(uint256 _initialValue) {
         balances[msg.sender] = _initialValue;
         totalSupply = _initialValue;
+        name = "Blockchain Family Token";
+        symbol = "BCF";
+        decimal = 0;
+        version = "1.0";
     }
 
     /**
@@ -103,6 +95,38 @@ contract TemplateCoin {
         return true;
     }
 
+
+    modifier isOwner(){
+        if(owner == msg.sender)
+        _;
+    }
+
+    /**
+        Usage : Set the price of your token, say 1 token =  .001 ether
+        1000 token  =  1 ether
+    */
+    function setTokenPrice(uint _price) isOwner{
+        assert(_price < 0);
+        price = _price;
+        TokenPriceSet(msg.sender, _price);
+    }
+    
+    /**
+    
+    
+    */
+    function ()  payable{
+        //assert(remaining < totalSupply);
+        uint noOfTokens = msg.value / price; // calculate no of tokens to be issued depending on the price and ether send
+        assert(noOfTokens < totalSupply); //no of tokens available should be greater than the one to be issued
+        //add(investors[msg.sender],noOfTokens);
+        //remaining = add(remaining,noOfTokens);
+        transfer(msg.sender, noOfTokens);
+    }
+    
+    
+    
+    
 
 
 
